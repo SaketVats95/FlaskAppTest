@@ -2,18 +2,19 @@ from flask import Flask
 
 app = Flask(__name__)
 
-@app.route('/')
-@app.route('/index')
-def index():
-    #if True: 
-    return ''.join(readData('file1.txt'))
+@app.route('/',defaults={'fileName': 'file1'})
+@app.route('/<fileName>')
+def index(fileName):
+    #if True:
+    fileName=fileName+'.txt' 
+    return ''.join(readData(fileName))
     return "Hello, World!"
 
 def readData(fileName,startLine=0,endLine=0):
     lines=[]
-    with open('./data/'+fileName,'r') as f:
-        lines=f.read().split('\n')
-    #print(lines) 
+    with open('./data/'+fileName,encoding='utf8') as f:
+        lines=f.read()
+    print(lines) 
     if(startLine!=0 and endLine!=0):
         return lines[startLine:endLine]
     return lines
