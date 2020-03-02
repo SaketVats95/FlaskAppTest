@@ -1,4 +1,5 @@
 from flask import Flask,request
+import codecs
 
 app = Flask(__name__)
 
@@ -14,13 +15,13 @@ def index(fileName):
     except Exception as e:
         print('start and end not provided by user')
     fileName=fileName+'.txt' 
-    return ''.join(readData(fileName))
+    return "<pre>"+'\n'.join(readData(fileName))+"</pre>"
     return "Hello, World!"
 
 def readData(fileName,startLine=0,endLine=0):
     lines=[]
     with open('./data/'+fileName,encoding='utf8') as f:
-        lines=f.read()
+        lines=f.read().split('\n')
     print(lines) 
     if(startLine!=0 and endLine!=0):
         if(startLine<0 or endLine>len(lines)):
@@ -28,8 +29,22 @@ def readData(fileName,startLine=0,endLine=0):
         return lines[startLine:endLine]
     return lines
 
+def readData_HavingDiffLanguage(fileName,startLine=0,endLine=0):
+    lines=[]
+    with codecs.open('./data/'+fileName,'r',encoding='cp720') as f:
+        for line in f:
+            lines.append(line)
+    print(lines) 
+    if(startLine!=0 and endLine!=0):
+        if(startLine<0 or endLine>len(lines)):
+            return "Provided start Line number or end Line Number is not present in {0}".format(fileName)
+        return lines[startLine:endLine]
+    return lines
 if __name__ == "__main__":
     readData('file1.txt')
     app.run(debug=True)
+
+
+
 
 
