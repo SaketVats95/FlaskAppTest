@@ -22,7 +22,7 @@ def readData(fileName,startLine=0,endLine=0):
     lines=[]
     with open('./data/'+fileName,encoding='utf8',errors='ignore') as f:
         lines=f.read().split('\n')
-    print(lines) 
+    #print(lines) 
     if(startLine!=0 and endLine!=0):
         if(startLine<0 or endLine>len(lines)):
             return "Provided start Line number or end Line Number is not present in {0}".format(fileName)
@@ -40,6 +40,8 @@ def readData_HavingDiffLanguage(fileName,startLine=0,endLine=0):
             return "Provided start Line number or end Line Number is not present in {0}".format(fileName)
         return lines[startLine:endLine]
     return lines
+
+    
 if __name__ == "__main__":
     app.run(debug=True)
 
